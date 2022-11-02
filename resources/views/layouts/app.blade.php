@@ -18,10 +18,11 @@
 ​
             <ul class="nav nav-pills">
                 <li class="nav-item me-2"><a href="/" class="nav-link active">Accueil</a></li>
+                <li class="nav-item me-2"><a href="/posts" class="nav-link active">Administration</a></li>
                 @if (Route::has('login'))
                     @auth
-                        {{-- <li class="nav-item"><a href="{{ url('/dashboard') }}" class="nav-link active">Dashboard</a></li> --}}
-                        <li class="nav-item me-2"><a href="{{ url('/hello-creative') }}" class="nav-link active">Hello</a></li>
+                        {{-- <li class="nav-item"><a href="{{ url('/dashboard') }}" class="nav-link active">Dashboard</a></li> 
+                        <li class="nav-item me-2"><a href="{{ url('/hello-creative') }}" class="nav-link active">Hello</a></li>--}}
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
         

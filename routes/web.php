@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,29 @@ Route::get('/', function () {
 
 Route::get('/hello-creative', fn() => view('hello-creative'))->name('hello-creative');
 
+// Route::get('/posts', [AdminPostController::class, 'index'])->name('posts.index');
+// Route::get('/posts/create', [AdminPostController::class, 'create'])->name('posts.create');
+// Route::delete('/posts/delete', [AdminPostController::class, 'delete'])->name('posts.delete');
+// Route::post('/posts/store', [AdminPostController::class, 'store'])->name('posts.store');
+// Route::get('/posts/{slug}', [AdminPostController::class, 'show'])->name('posts.show');
+
+
+Route::controller(App\Http\Controllers\Admin\PostController::class)->group(function() {
+    Route::get('/posts','index')->name('posts.index');
+    Route::get('/posts/create','create')->name('posts.create');
+    Route::get('/posts/{slug}','show')->name('posts.show');
+    Route::get('/posts/edit/{slug}','edit')->name('posts.edit');
+
+    Route::post('/posts/store','store')->name('posts.store');
+
+    Route::put('/posts/update/{slug}','update')->name('posts.update');
+
+    Route::delete('/posts/delete/{slug}','destroy')->name('posts.delete');
+});
+
 Route::get('/', [PageController::class, 'home']);
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

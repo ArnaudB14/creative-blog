@@ -14,44 +14,23 @@
     </div>
     ​
     <h1 class="mb-4">Les derniers articles : </h1>
+    
+    @if(!$posts->isEmpty())
     ​
     <div class="list-group w-auto mb-4">
-        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
+        @foreach($posts as $post)
+        <a href="{{route('posts.show', $post->slug)}}" class="list-group-item list-group-item-action d-flex gap-3 py-3">
             <div class="d-flex gap-2 w-100 justify-content-between">
                 <div>
-                    <h6 class="mb-0">Actualité 1</h6>
-                    <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+                    <h6 class="mb-0">{{ $post->title }}</h6>
+                    <p class="mb-0 opacity-75">{{ $post->description }}</p>
                 </div>
-                <small class="opacity-50 text-nowrap">Le 26/10/2022</small>
+                <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>
             </div>
         </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-            <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                    <h6 class="mb-0">Actualité 2</h6>
-                    <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-                </div>
-                <small class="opacity-50 text-nowrap">Le 25/10/2022</small>
-            </div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-            <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                    <h6 class="mb-0">Actualité 1</h6>
-                    <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-                </div>
-                <small class="opacity-50 text-nowrap">Le 24/10/2022</small>
-            </div>
-        </a>
-        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-            <div class="d-flex gap-2 w-100 justify-content-between">
-                <div>
-                    <h6 class="mb-0">Actualité 1</h6>
-                    <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-                </div>
-                <small class="opacity-50 text-nowrap">Le 23/10/2022</small>
-            </div>
-        </a>
+        @endforeach 
     </div>
+
+    @endif
 
 @endsection
