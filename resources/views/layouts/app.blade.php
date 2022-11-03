@@ -16,13 +16,13 @@
                 <span class="fs-4">Blog Créative</span>
             </a>
 ​
-            <ul class="nav nav-pills">
+            <ul class="nav">
                 <li class="nav-item me-2"><a href="/" class="nav-link active">Accueil</a></li>
-                <li class="nav-item me-2"><a href="/posts" class="nav-link active">Administration</a></li>
                 @if (Route::has('login'))
                     @auth
                         {{-- <li class="nav-item"><a href="{{ url('/dashboard') }}" class="nav-link active">Dashboard</a></li> 
                         <li class="nav-item me-2"><a href="{{ url('/hello-creative') }}" class="nav-link active">Hello</a></li>--}}
+                        <li class="nav-item me-2"><a href="/admin" class="nav-link active">Administration</a></li>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
         
@@ -35,10 +35,10 @@
                             </li>
                         </form>
                     @else
-                        <li class="nav-item me-2"><a href="{{ route('login') }}" class="nav-link active">Log in</a></li>
+                        <li class="nav-item me-2"><a href="{{ route('login') }}" class="nav-link active">Connexion</a></li>
 
                         @if (Route::has('register'))
-                        <li class="nav-item"><a href="{{ route('register') }}" class="nav-link active">Register</a></li>
+                        <li class="nav-item"><a href="{{ route('register') }}" class="nav-link active">Inscription</a></li>
                         @endif
                     @endauth
                 @endif

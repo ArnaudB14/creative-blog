@@ -17,5 +17,9 @@ class Post extends Model
         static::creating(function ($post) {
             $post->slug = Str::slug($post->title);
         });
+
+        static::updating(function ($post) {
+            $post->slug = Str::slug($post->title);
+        });
     }
 }

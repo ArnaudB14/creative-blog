@@ -9,7 +9,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $posts = Post::latest()->get();
+        $posts = Post::latest()->paginate(5);
         // return view('pages.home', ['posts' => collect()]);
         return view('pages.home', ['posts' => $posts]);
     }

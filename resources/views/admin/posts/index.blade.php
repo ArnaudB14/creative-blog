@@ -44,6 +44,9 @@
         </div>
     </div>
     @endforeach 
+    <div class="my-3 mx-auto">
+        {{ $posts->links() }}
+    </div>
 </div>
 
 @endif

@@ -2,6 +2,19 @@
 
 @section('content')
 
+@include('flash-message')
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
     <div class="px-4 py-5 my-5 text-center">
         <img class="d-inline-block mb-3" src="https://www.creative-formation.fr/wp-content/themes/creative-formation/assets/lettre-creative.svg" alt="Le C du logo Créative Formation" style="width: 50px">
         <h1 class="display-5 fw-bold">Bienvenue sur le blog de Créative</h1>
@@ -29,8 +42,10 @@
             </div>
         </a>
         @endforeach 
+        <div class="my-3 mx-auto">
+            {{ $posts->links() }}
+        </div>
     </div>
-
     @endif
 
 @endsection

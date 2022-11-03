@@ -7,6 +7,7 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -17,8 +18,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
-        return view('admin.posts.index', ['posts' => $posts]);
+        if (Auth::check()) {
+            $posts = Post::latest()->paginate(7);
+            return view('admin.posts.index', ['posts' => $posts]);
+        }
+
+        return redirect('/')->with('error', 'Vous devez être connecté pour voir cette page');
     }
 
     /**
@@ -28,7 +33,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        if (Auth::check()) {
+            return view('admin.posts.create');
+        }
+        return redirect('/')->with('error', 'Vous devez être connecté pour voir cette page');
     }
 
     /**
@@ -37,16 +45,21 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-        ]);
+        if (Auth::check()) {
+            $validatedData = $request->validated();
+
+            $posts = Post::create([
+                 'title' => $validatedData['title'],
+                 'description' => $validatedData['description'],
+            ]);
+ 
         
-        Post::create($validatedData);
-    
-        return redirect('posts')->with('success', 'Article créé avec succès');
+            return redirect('posts')->with('success', 'Article créé avec succès');
+        }
+
+        return redirect('/')->with('error', 'Vous devez être connecté pour voir cette page');
     }
 
     /**
@@ -69,8 +82,12 @@ class PostController extends Controller
      */
     public function edit($slug)
     {
-        $posts = Post::where('slug', $slug)->first();
-        return view('admin.posts.edit', ['posts' => $posts]);
+        if (Auth::check()) {
+            $posts = Post::where('slug', $slug)->first();
+            return view('admin.posts.edit', ['posts' => $posts]);
+        }
+
+        return redirect('/')->with('error', 'Vous devez être connecté pour modifier un article');
     }
 
     /**
@@ -80,21 +97,21 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function update(PostRequest $request, $slug)
     {
 
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'description' => 'required',
-        ]);
+        if (Auth::check()) {
+           $validatedData = $request->validated();
 
-        $posts = Post::where('slug', $slug)->first()->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            $validatedData
-        ]);
+           $posts = Post::where('slug', $slug)->first()->update([
+                'title' => $validatedData['title'],
+                'description' => $validatedData['description'],
+           ]);
 
-        return redirect('/posts')->with('success', 'Article modifié avec succès');
+            return redirect('/posts')->with('success', 'Article modifié avec succès');
+        }
+
+        return redirect('/')->with('error', 'Vous devez être connecté pour modifier un article');
     }
 
     /**
@@ -105,8 +122,13 @@ class PostController extends Controller
      */
     public function destroy($slug)
     {
-        $posts = Post::where('slug', $slug)->first()->delete();
 
-        return redirect('/posts')->with('success', 'L\'article a bien été supprimé');
+        if (Auth::check()) {
+            $posts = Post::where('slug', $slug)->first()->delete();
+
+            return redirect('/posts')->with('success', 'L\'article a bien été supprimé');
+        }
+
+        return redirect('/')->with('error', 'Vous devez être connecté pour supprimer');
     }
 }

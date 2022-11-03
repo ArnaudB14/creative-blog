@@ -19,7 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello-creative', fn() => view('hello-creative'))->name('hello-creative');
+
+Route::get('/admin', fn() => view('dashboard'))->name('admin')->middleware('auth');
 
 // Route::get('/posts', [AdminPostController::class, 'index'])->name('posts.index');
 // Route::get('/posts/create', [AdminPostController::class, 'create'])->name('posts.create');
