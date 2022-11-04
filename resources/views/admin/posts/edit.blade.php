@@ -32,8 +32,12 @@
         <textarea class="form-control" id="description" name="description" value="{{old('description')}}">{{$posts->description}}</textarea>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 d-flex flex-column">
+        <label for="file" class="form-label">Image</label>
         <input type="file" name="file_path" id="file_path" value="{{old('file_path')}}">
+        @if ($posts->file_path)
+            <img class="w-25 mt-2" src="{{ asset('images/' . $posts->file_path) }}">
+        @endif
     </div>
 
     <div class="mb-3 d-flex flex-column align-items-start">

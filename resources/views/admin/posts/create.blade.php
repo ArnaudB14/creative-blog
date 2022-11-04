@@ -31,7 +31,8 @@
         <textarea class="form-control" id="description" name="description" value="{{old('description')}}">{{old('description')}}</textarea>
     </div>
 
-    <div class="mb-3">
+    <div class="mb-3 d-flex flex-column">
+        <label for="file" class="form-label">Image</label>
         <input type="file" name="file_path" id="file_path" value="{{old('file_path')}}">
     </div>
 
