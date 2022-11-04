@@ -28,6 +28,9 @@
                 <h6 class="mb-0">{{ $post->title }}</h6>
                 <p class="mb-0 opacity-75">{{ $post->description }}</p>
             </div>
+            <div>
+                <p class="mb-0 opacity-75">{{ $post->category->name }}</p>
+            </div>
             <div class="d-flex align-items-center">
                 <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>
                 <a href="{{ url('posts/edit/'. $post->slug)}}" class="text-decoration-none mx-2">

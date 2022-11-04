@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $posts = Post::latest()->paginate(7);
+            $posts = Post::with('category')->latest()->paginate(7);
             return view('admin.posts.index', ['posts' => $posts]);
         }
 
@@ -34,7 +35,8 @@ class PostController extends Controller
     public function create()
     {
         if (Auth::check()) {
-            return view('admin.posts.create');
+            $categories = Category::all();
+            return view('admin.posts.create', ['categories' => $categories]);
         }
         return redirect('/')->with('error', 'Vous devez être connecté pour voir cette page');
     }
@@ -53,6 +55,7 @@ class PostController extends Controller
             $posts = Post::create([
                  'title' => $validatedData['title'],
                  'description' => $validatedData['description'],
+                 'category_id' => $validatedData['category_id'],
             ]);
  
         
@@ -106,6 +109,7 @@ class PostController extends Controller
            $posts = Post::where('slug', $slug)->first()->update([
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
+                'category_id' => $validatedData['category_id'],
            ]);
 
             return redirect('/posts')->with('success', 'Article modifié avec succès');

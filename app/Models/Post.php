@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['title', 'description', 'category_id', "created_at", "updated_at"];
 
     protected static function boot() {
         parent::boot();
@@ -21,5 +21,9 @@ class Post extends Model
         static::updating(function ($post) {
             $post->slug = Str::slug($post->title);
         });
+    }
+
+    public function category() {
+        return $this->belongsTo(Category::class);
     }
 }
