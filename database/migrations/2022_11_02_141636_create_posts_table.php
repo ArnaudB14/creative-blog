@@ -18,10 +18,18 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->text('description');
+            $table->string('file_path')->nullable();
+
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')
             ->references('id')
             ->on('categories');
+
+            $table->unsignedBigInteger('status_id');
+            $table->foreign('status_id')
+            ->references('id')
+            ->on('statuses');
+            
             $table->timestamps();
         });
     }

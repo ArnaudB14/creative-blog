@@ -14,16 +14,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug');
             $table->timestamps();
         });
-        
-        
-        DB::table('categories')->insert([
-            ['name' => 'News', 'slug' => 'news'],
+
+        DB::table('statuses')->insert([
+            ['name' => 'Publié', 'slug' => 'publie'],
+            ['name' => 'Brouillon', 'slug' => 'brouillon'],
+            ['name' => 'En attente de validation', 'slug' => 'en-attente-de-validation'],
         ]);
     }
 
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('statuses');
     }
 };

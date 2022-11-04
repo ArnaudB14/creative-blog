@@ -32,6 +32,26 @@
         <textarea class="form-control" id="description" name="description" value="{{old('description')}}">{{$posts->description}}</textarea>
     </div>
 
+    <div class="mb-3 d-flex flex-column align-items-start">
+        <label for="status" class="form-label required">Statut</label>
+            <select name="status_id" class="block w-full mt-1 rounded-md">
+                @foreach ($statuses as $status)
+                    <option value="{{$status->id}}">{{$status->name}}</option>
+                @endforeach
+            </select>
+        </label>
+    </div>
+
+    <div class="mb-3 d-flex flex-column align-items-start">
+        <label for="category" class="form-label required">Catégorie</label>
+            <select name="category_id" class="block w-full mt-1 rounded-md">
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+        </label>
+    </div>
+
     <button class="btn btn-primary">Modifier</button>
 
 </form>

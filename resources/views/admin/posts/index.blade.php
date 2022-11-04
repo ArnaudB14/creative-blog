@@ -27,9 +27,16 @@
             <div>
                 <h6 class="mb-0">{{ $post->title }}</h6>
                 <p class="mb-0 opacity-75">{{ $post->description }}</p>
-            </div>
-            <div>
-                <p class="mb-0 opacity-75">{{ $post->category->name }}</p>
+                @if ($post->status->name === "Publié")
+                    <span class="badge rounded-pill bg-success">{{ $post->status->name }}</span>
+                @elseif ($post->status->name === "Brouillon")
+                    <span class="badge rounded-pill bg-danger">{{ $post->status->name }}</span>
+                @elseif ($post->status->name === "En attente de validation")
+                    <span class="badge rounded-pill bg-warning text-dark">{{ $post->status->name }}</span>
+                @else
+                    <span class="badge rounded-pill bg-primary">{{ $post->status->name }}</span>
+                @endif
+                <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
             </div>
             <div class="d-flex align-items-center">
                 <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>
@@ -39,7 +46,7 @@
                 <form action="{{ url('posts/delete/'. $post->slug)}}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button class="border-0 p-0">
+                    <button class="border-0 p-0" onclick="if(!confirm('Voulez-vous vraiment supprimer cet article ?')) {return false;}">
                         <i class="bi bi-trash-fill btn btn-danger btn-sm"></i>
                     </button>
                 </form>

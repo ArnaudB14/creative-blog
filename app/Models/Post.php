@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'category_id', "created_at", "updated_at"];
+    protected $fillable = ['title', 'description', 'category_id', 'status_id', 'file_path', 'created_at', 'updated_at'];
 
     protected static function boot() {
         parent::boot();
@@ -25,5 +25,9 @@ class Post extends Model
 
     public function category() {
         return $this->belongsTo(Category::class);
+    }
+
+    public function status() {
+        return $this->belongsTo(Status::class);
     }
 }

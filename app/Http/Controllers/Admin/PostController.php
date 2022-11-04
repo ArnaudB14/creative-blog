@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class PostController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $posts = Post::with('category')->latest()->paginate(7);
+            $posts = Post::with(['category', 'status'])->latest()->paginate(7);
             return view('admin.posts.index', ['posts' => $posts]);
         }
 
@@ -36,7 +37,8 @@ class PostController extends Controller
     {
         if (Auth::check()) {
             $categories = Category::all();
-            return view('admin.posts.create', ['categories' => $categories]);
+            $statuses = Status::all();
+            return view('admin.posts.create', ['categories' => $categories], ['statuses' => $statuses]);
         }
         return redirect('/')->with('error', 'Vous devez être connecté pour voir cette page');
     }
@@ -52,13 +54,22 @@ class PostController extends Controller
         if (Auth::check()) {
             $validatedData = $request->validated();
 
+            // UPLOAD IMAGE
+            
+            if(isset($request->file_path)) {
+                $imageName = Str::uuid() . '.' . $request->file_path->extension();
+                $request->file_path->move(public_path('images'), $imageName);
+                $validatedData['file_path'] = $imageName;
+            };
+
             $posts = Post::create([
-                 'title' => $validatedData['title'],
-                 'description' => $validatedData['description'],
-                 'category_id' => $validatedData['category_id'],
+                'title' => $validatedData['title'],
+                'description' => $validatedData['description'],
+                'category_id' => $validatedData['category_id'],
+                'status_id' => $validatedData['status_id'],
+                'file_path' => $validatedData['file_path'],
             ]);
- 
-        
+
             return redirect('posts')->with('success', 'Article créé avec succès');
         }
 
@@ -71,10 +82,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug) 
+    public function show($id, $slug) 
     {
-        $posts = Post::where('slug', $slug)->first();
-        return view('admin.posts.show', ['posts' => $posts]);
+        $post = Post::where('id', $id)->where('slug', $slug)->firstOrFail();
+        
+        return view('admin.posts.show', ['post' => $post]);
     }
 
     /**
@@ -86,8 +98,10 @@ class PostController extends Controller
     public function edit($slug)
     {
         if (Auth::check()) {
+            $categories = Category::all();
+            $statuses = Status::all();
             $posts = Post::where('slug', $slug)->first();
-            return view('admin.posts.edit', ['posts' => $posts]);
+            return view('admin.posts.edit', ['posts' => $posts, 'categories' => $categories, 'statuses' => $statuses]);
         }
 
         return redirect('/')->with('error', 'Vous devez être connecté pour modifier un article');
@@ -102,7 +116,6 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, $slug)
     {
-
         if (Auth::check()) {
            $validatedData = $request->validated();
 
@@ -110,6 +123,7 @@ class PostController extends Controller
                 'title' => $validatedData['title'],
                 'description' => $validatedData['description'],
                 'category_id' => $validatedData['category_id'],
+                'status_id' => $validatedData['status_id'],
            ]);
 
             return redirect('/posts')->with('success', 'Article modifié avec succès');
@@ -133,6 +147,6 @@ class PostController extends Controller
             return redirect('/posts')->with('success', 'L\'article a bien été supprimé');
         }
 
-        return redirect('/')->with('error', 'Vous devez être connecté pour supprimer');
+        return redirect('/')->with('error', 'Vous devez être connecté pour supprimer un article');
     }
 }
