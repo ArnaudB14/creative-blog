@@ -40,7 +40,7 @@
         <label for="status" class="form-label required">Statut</label>
             <select name="status_id" class="block w-full mt-1 rounded-md">
                 @foreach ($statuses as $status)
-                    <option value="{{$status->id}}">{{$status->name}}</option>
+                    <option value="{{$status->id}}" {{ $status->id == $posts->status_id ? 'selected' : '' }}>{{ $status->name }}</option>
                 @endforeach
             </select>
         </label>
