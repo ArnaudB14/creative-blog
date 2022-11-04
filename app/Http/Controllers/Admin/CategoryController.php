@@ -54,7 +54,7 @@ class CategoryController extends Controller
             ]);
  
         
-            return redirect('categories')->with('success', 'Article créé avec succès');
+            return redirect('categories')->with('success', 'Catégorie créée avec succès');
         }
 
         return redirect('/')->with('error', 'Vous devez être connecté pour voir cette page');
@@ -77,10 +77,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($slug)
+    public function edit($id, $slug)
     {
         if (Auth::check()) {
-            $categories = Category::where('slug', $slug)->first();
+            $categories = Category::where('id', $id)->where('slug', $slug)->first();
             return view('admin.categories.edit', ['categories' => $categories]);
         }
 
@@ -94,12 +94,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $slug)
+    public function update(CategoryRequest $request, $id, $slug)
     {
         if (Auth::check()) {
             $validatedData = $request->validated();
  
-            $categories = Category::where('slug', $slug)->first()->update([
+            $categories = Category::where('id', $id)->where('slug', $slug)->first()->update([
                  'name' => $validatedData['name'],
             ]);
  
@@ -115,10 +115,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($slug)
+    public function destroy($id, $slug)
     {
         if (Auth::check()) {
-            $categories = Category::where('slug', $slug)->first()->delete();
+            $categories = Category::where('id', $id)->where('slug', $slug)->first()->delete();
 
             return redirect('/categories')->with('success', 'La catégorie a bien été supprimé');
         }

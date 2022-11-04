@@ -60,16 +60,25 @@ class PostController extends Controller
                 $imageName = Str::uuid() . '.' . $request->file_path->extension();
                 $request->file_path->move(public_path('images'), $imageName);
                 $validatedData['file_path'] = $imageName;
+
+                $posts = Post::create([
+                    'title' => $validatedData['title'],
+                    'description' => $validatedData['description'],
+                    'category_id' => $validatedData['category_id'],
+                    'status_id' => $validatedData['status_id'],
+                    'file_path' => $validatedData['file_path'],
+                ]);
+            }
+
+            else {
+                $posts = Post::create([
+                    'title' => $validatedData['title'],
+                    'description' => $validatedData['description'],
+                    'category_id' => $validatedData['category_id'],
+                    'status_id' => $validatedData['status_id'],
+                ]);
             };
-
-            $posts = Post::create([
-                'title' => $validatedData['title'],
-                'description' => $validatedData['description'],
-                'category_id' => $validatedData['category_id'],
-                'status_id' => $validatedData['status_id'],
-                'file_path' => $validatedData['file_path'],
-            ]);
-
+            
             return redirect('posts')->with('success', 'Article créé avec succès');
         }
 
@@ -95,12 +104,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($slug)
+    public function edit($id, $slug)
     {
         if (Auth::check()) {
             $categories = Category::all();
             $statuses = Status::all();
-            $posts = Post::where('slug', $slug)->first();
+            $posts = Post::where('id', $id)->where('slug', $slug)->first();
             return view('admin.posts.edit', ['posts' => $posts, 'categories' => $categories, 'statuses' => $statuses]);
         }
 
@@ -114,18 +123,33 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, $slug)
+    public function update(PostRequest $request, $id, $slug)
     {
         if (Auth::check()) {
            $validatedData = $request->validated();
 
-           $posts = Post::where('slug', $slug)->first()->update([
-                'title' => $validatedData['title'],
-                'description' => $validatedData['description'],
-                'category_id' => $validatedData['category_id'],
-                'status_id' => $validatedData['status_id'],
-           ]);
+           if(isset($request->file_path)) {
+                $imageName = Str::uuid() . '.' . $request->file_path->extension();
+                $request->file_path->move(public_path('images'), $imageName);
+                $validatedData['file_path'] = $imageName;
 
+                $posts = Post::where('id', $id)->where('slug', $slug)->first()->update([
+                    'title' => $validatedData['title'],
+                    'description' => $validatedData['description'],
+                    'category_id' => $validatedData['category_id'],
+                    'status_id' => $validatedData['status_id'],
+                    'file_path' => $validatedData['file_path'],
+                ]);
+            }
+
+            else {
+                $posts = Post::where('id', $id)->where('slug', $slug)->first()->update([
+                    'title' => $validatedData['title'],
+                    'description' => $validatedData['description'],
+                    'category_id' => $validatedData['category_id'],
+                    'status_id' => $validatedData['status_id'],
+                ]);
+            };
             return redirect('/posts')->with('success', 'Article modifié avec succès');
         }
 
@@ -138,11 +162,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($slug)
+    public function destroy($id, $slug)
     {
 
         if (Auth::check()) {
-            $posts = Post::where('slug', $slug)->first()->delete();
+            $posts = Post::where('id', $id)->where('slug', $slug)->first()->delete();
 
             return redirect('/posts')->with('success', 'L\'article a bien été supprimé');
         }

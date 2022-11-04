@@ -36,14 +36,17 @@
                 @else
                     <span class="badge rounded-pill bg-primary">{{ $post->status->name }}</span>
                 @endif
-                <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
+
+                @if ($post->category->name != "Aucune")
+                    <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
+                @endif
             </div>
             <div class="d-flex align-items-center">
                 <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>
-                <a href="{{ url('posts/edit/'. $post->slug)}}" class="text-decoration-none mx-2">
+                <a href="{{route('posts.edit', [$post->id , $post->slug])}}" class="text-decoration-none mx-2">
                     <i class="bi bi-pencil-square btn btn-primary btn-sm"></i>
                 </a>
-                <form action="{{ url('posts/delete/'. $post->slug)}}" method="POST">
+                <form action="{{route('posts.delete', [$post->id , $post->slug])}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="border-0 p-0" onclick="if(!confirm('Voulez-vous vraiment supprimer cet article ?')) {return false;}">

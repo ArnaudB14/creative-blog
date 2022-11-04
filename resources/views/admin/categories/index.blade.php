@@ -10,6 +10,7 @@
 @if(!$categories->isEmpty())
 
 @include('flash-message')
+
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -28,10 +29,10 @@
                 <h6 class="mb-0">{{ $category->name }}</h6>
             </div>
             <div class="d-flex align-items-center">
-                <a href="{{ url('categories/edit/'. $category->slug)}}" class="text-decoration-none mx-2">
+                <a href="{{route('categories.edit', [$category->id , $category->slug])}}" class="text-decoration-none mx-2">
                     <i class="bi bi-pencil-square btn btn-primary btn-sm"></i>
                 </a>
-                <form action="{{ url('categories/delete/'. $category->slug)}}" method="POST">
+                <form action="{{route('categories.delete', [$category->id , $category->slug])}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="border-0 p-0">

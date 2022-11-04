@@ -18,7 +18,7 @@
     </div>
 @endif
 
-<form action="{{ url('posts/update/'. $posts->slug)}}" method="POST">
+<form action="{{ route('posts.update', [$posts->id , $posts->slug])}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -30,6 +30,10 @@
     <div class="mb-3">
         <label for="description" class="form-label">Description</label>
         <textarea class="form-control" id="description" name="description" value="{{old('description')}}">{{$posts->description}}</textarea>
+    </div>
+
+    <div class="mb-3">
+        <input type="file" name="file_path" id="file_path" value="{{old('file_path')}}">
     </div>
 
     <div class="mb-3 d-flex flex-column align-items-start">

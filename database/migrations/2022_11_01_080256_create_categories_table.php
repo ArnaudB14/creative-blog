@@ -23,7 +23,7 @@ return new class extends Migration
         
         
         DB::table('categories')->insert([
-            ['name' => 'News', 'slug' => 'news'],
+            ['name' => 'Aucune', 'slug' => 'aucune'],
         ]);
     }
 
