@@ -7,6 +7,7 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Status;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -92,10 +93,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id, $slug) 
-    {
+    {   
+        $comments = Comment::where('post_id', $id)->get();
         $post = Post::where('id', $id)->where('slug', $slug)->firstOrFail();
         
-        return view('admin.posts.show', ['post' => $post]);
+        return view('admin.posts.show', ['post' => $post, 'comments' => $comments]);
     }
 
     /**

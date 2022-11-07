@@ -30,4 +30,8 @@ class Post extends Model
     public function status() {
         return $this->belongsTo(Status::class);
     }
+
+    public function comment(){
+        return $this->hasMany(Comment::class);
+    }
 }

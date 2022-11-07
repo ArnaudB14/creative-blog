@@ -67,4 +67,4 @@
       content:" *";
       color: red;
     }
-  </style>
+</style>

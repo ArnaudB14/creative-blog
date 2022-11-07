@@ -11,29 +11,43 @@
 <body>
 ​
     <div class="container">
-        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <header class="d-flex flex-wrap justify-content-center align-items-center py-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <span class="fs-4">Blog Créative</span>
             </a>
 ​
-            <ul class="nav">
+            <ul class="nav align-items-baseline">
                 <li class="nav-item me-2"><a href="/" class="nav-link active">Accueil</a></li>
                 @if (Route::has('login'))
                     @auth
-                        {{-- <li class="nav-item"><a href="{{ url('/dashboard') }}" class="nav-link active">Dashboard</a></li> 
-                        <li class="nav-item me-2"><a href="{{ url('/hello-creative') }}" class="nav-link active">Hello</a></li>--}}
                         <li class="nav-item me-2"><a href="/admin" class="nav-link active">Administration</a></li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-        
-                            <li class="nav-item"> 
-                                <a href="route('logout')" class="nav-link active"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Déconnexion') }}
-                                </a>
-                            </li>
-                        </form>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{Auth::user()->name}}
+                                @if (Auth::user()->file_path)
+                                    <img src="{{ asset('images/profile/' . Auth::user()->file_path) }}" class="navbar-img">
+                                @else 
+                                    <img src="{{ asset('images/profile/default-profile-pic.jpg') }} " class="rounded-circle navbar-img">
+                                @endif
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class=" nav-item"><a class="dropdown-item nav-link" href="/account">Mon compte</a></li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                
+                                    <li class="nav-item"> 
+                                        <a href="route('logout')" class="nav-link dropdown-item"
+                                            onclick="event.preventDefault();
+                                                        this.closest('form').submit();">
+                                        {{ __('Déconnexion') }}
+                                        </a>
+                                    </li>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
                     @else
                         <li class="nav-item me-2"><a href="{{ route('login') }}" class="nav-link active">Connexion</a></li>
 
@@ -54,6 +68,20 @@
     <div class="container">
         <p>© 2022 Créative - Tous droits réservés</p>
     </div>
-    
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>  
 </body>
 </html>
+
+<style>
+    .navbar-img {
+        width: 35px;
+        height: 35px;
+        margin-left: 7px;
+        margin-right: 2px; 
+    }
+
+    .dropdown-toggle::after {
+        margin-left: 0;
+    }
+</style>

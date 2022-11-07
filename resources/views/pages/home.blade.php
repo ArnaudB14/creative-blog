@@ -38,6 +38,9 @@
                 <div>
                     <h6 class="mb-0">{{ $post->title }}</h6>
                     <p class="mb-0 opacity-75">{{ $post->description }}</p>
+                    @if ($post->category->name != "Aucune")
+                        <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
+                    @endif
                 </div>
                 <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>
             </div>

@@ -55,6 +55,23 @@ Route::controller(App\Http\Controllers\Admin\CategoryController::class)->middlew
     Route::delete('/categories/delete/{id}-{slug}','destroy')->name('categories.delete');
 });
 
+Route::controller(App\Http\Controllers\Admin\AccountController::class)->middleware(['auth', 'verified'])->group(function() {
+    Route::get('/account','index')->name('account.index');
+    Route::put('/account/update/{id}','update')->name('account.update');
+
+});
+
+Route::controller(App\Http\Controllers\CommentController::class)->middleware(['auth', 'verified'])->group(function() {
+
+    Route::post('/comments/store/{post_id}','store')->name('comments.store');
+    Route::get('/comments/edit/{id}','edit')->name('comments.edit');
+    Route::put('/comments/update/{id}}','update')->name('comments.update');
+    Route::delete('/comments/delete/{id}','destroy')->name('comments.delete');
+
+});
+
+
+
 Route::get('/', [PageController::class, 'home']);
 
 Route::fallback(function() {

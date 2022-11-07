@@ -31,6 +31,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
+            'file_path' => ['nullable', 'max:2048', 'mimes:jpg,png,jpeg,bpm,svg'],
         ];
     }
 
