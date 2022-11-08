@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'category_id', 'status_id', 'file_path', 'created_at', 'updated_at'];
+    protected $fillable = ['title', 'description', 'category_id', 'status_id', 'tag_id', 'file_path', 'created_at', 'updated_at'];
 
     protected static function boot() {
         parent::boot();
@@ -33,5 +33,9 @@ class Post extends Model
 
     public function comment(){
         return $this->hasMany(Comment::class);
+    }
+
+    public function tag(){
+        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 }

@@ -18,7 +18,8 @@ class PostRequest extends FormRequest
             'description' => ['required'],
             'file_path' => ['nullable', 'max:2048', 'mimes:jpg,png,jpeg,bpm,svg'],
             'category_id' => ['required'],
-            'status_id' => ['required']
+            'status_id' => ['required'],
+            'tag_id' => ['nullable'],
         ];
     }
 

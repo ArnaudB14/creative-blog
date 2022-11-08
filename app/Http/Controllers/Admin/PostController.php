@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\Category;
 use App\Models\Status;
 use App\Models\Comment;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -37,9 +38,10 @@ class PostController extends Controller
     public function create()
     {
         if (Auth::check()) {
+            $tags = Tag::all();
             $categories = Category::all();
             $statuses = Status::all();
-            return view('admin.posts.create', ['categories' => $categories], ['statuses' => $statuses]);
+            return view('admin.posts.create', ['categories' => $categories, 'statuses' => $statuses, 'tags' => $tags]);
         }
         return redirect('/')->with('error', 'Vous devez être connecté pour voir cette page');
     }
@@ -51,10 +53,10 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(PostRequest $request)
-    {
+    {   
         if (Auth::check()) {
             $validatedData = $request->validated();
-
+            
             // UPLOAD IMAGE
             
             if(isset($request->file_path)) {
@@ -62,7 +64,7 @@ class PostController extends Controller
                 $request->file_path->move(public_path('images'), $imageName);
                 $validatedData['file_path'] = $imageName;
 
-                $posts = Post::create([
+                $post = Post::create([
                     'title' => $validatedData['title'],
                     'description' => $validatedData['description'],
                     'category_id' => $validatedData['category_id'],
@@ -70,16 +72,19 @@ class PostController extends Controller
                     'file_path' => $validatedData['file_path'],
                 ]);
             }
+           
 
             else {
-                $posts = Post::create([
+                $post = Post::create([
                     'title' => $validatedData['title'],
                     'description' => $validatedData['description'],
                     'category_id' => $validatedData['category_id'],
                     'status_id' => $validatedData['status_id'],
                 ]);
             };
-            
+
+            $post->tag()->attach($request->tag_id);
+
             return redirect('posts')->with('success', 'Article créé avec succès');
         }
 
@@ -94,10 +99,11 @@ class PostController extends Controller
      */
     public function show($id, $slug) 
     {   
+        $tags = Post::find($id)->tag();
         $comments = Comment::where('post_id', $id)->get();
         $post = Post::where('id', $id)->where('slug', $slug)->firstOrFail();
         
-        return view('admin.posts.show', ['post' => $post, 'comments' => $comments]);
+        return view('admin.posts.show', ['post' => $post, 'comments' => $comments, 'tags' => $tags]);
     }
 
     /**
@@ -111,8 +117,9 @@ class PostController extends Controller
         if (Auth::check()) {
             $categories = Category::all();
             $statuses = Status::all();
+            $tags = Tag::all();
             $posts = Post::where('id', $id)->where('slug', $slug)->first();
-            return view('admin.posts.edit', ['posts' => $posts, 'categories' => $categories, 'statuses' => $statuses]);
+            return view('admin.posts.edit', ['posts' => $posts, 'categories' => $categories, 'statuses' => $statuses, 'tags' => $tags]);
         }
 
         return redirect('/')->with('error', 'Vous devez être connecté pour modifier un article');
@@ -131,11 +138,12 @@ class PostController extends Controller
            $validatedData = $request->validated();
 
            if(isset($request->file_path)) {
+
                 $imageName = Str::uuid() . '.' . $request->file_path->extension();
                 $request->file_path->move(public_path('images'), $imageName);
                 $validatedData['file_path'] = $imageName;
 
-                $posts = Post::where('id', $id)->where('slug', $slug)->first()->update([
+                $post = Post::where('id', $id)->where('slug', $slug)->first()->update([
                     'title' => $validatedData['title'],
                     'description' => $validatedData['description'],
                     'category_id' => $validatedData['category_id'],
@@ -145,13 +153,16 @@ class PostController extends Controller
             }
 
             else {
-                $posts = Post::where('id', $id)->where('slug', $slug)->first()->update([
+                $post = Post::where('id', $id)->where('slug', $slug)->first()->update([
                     'title' => $validatedData['title'],
                     'description' => $validatedData['description'],
                     'category_id' => $validatedData['category_id'],
                     'status_id' => $validatedData['status_id'],
                 ]);
             };
+
+            Post::find($id)->tag()->sync($request->tag_id);
+
             return redirect('/posts')->with('success', 'Article modifié avec succès');
         }
 
@@ -168,8 +179,16 @@ class PostController extends Controller
     {
 
         if (Auth::check()) {
+            if (Comment::exists()) {
+                $comments = Comment::where('post_id', $id)->delete();
+            }
+            if (Tag::exists()) {
+                $tags = Post::find($id)->tag()->detach();
+            }
             $posts = Post::where('id', $id)->where('slug', $slug)->first()->delete();
-
+            
+            
+            // $tags = Post::find($id)->tag()->delete();
             return redirect('/posts')->with('success', 'L\'article a bien été supprimé');
         }
 

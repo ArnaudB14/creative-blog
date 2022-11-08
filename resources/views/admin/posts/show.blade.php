@@ -16,30 +16,43 @@
         <img src="{{ asset('images/' . $post->file_path) }}">
     @endif
 
+    <div class="d-flex">
+        @foreach ($post->tag as $postTag)
+            <a href="{{route('tags.show', [$postTag->id , $postTag->slug])}}">#{{$postTag->name}}</a>&nbsp; 
+        @endforeach
+    </div>
+    
     <div class="mt-5">
         <h3 class="mb-3">Commentaires :</h3>
 
+        @if ($comments->isEmpty())
+            <p class="text-center">Il n'y pas de commentaires sur cet article</p>
+        @else
+
         <div class="comment-section">
             @foreach($comments as $comment)
-            <div class="list-group-item d-flex gap-3 p-3 mb-3 border rounded">
-                <div class="d-flex gap-2 w-100">
-                    <div>
-                        @if ($comment->user->file_path)
-                            <img src="{{ asset('images/profile/' . $comment->user->file_path) }}" class="post-comment-img ml-1">
-                        @else 
-                            <img src="{{ asset('images/profile/default-profile-pic.jpg') }} " class="rounded-circle post-comment-img">
-                        @endif
-                    </div>
-                    <div class="d-flex flex-column ms-1">
-                        <small class="opacity-75 text-nowrap"> 
-                            <strong>{{ $comment->user->name}}</strong> le <strong>{{ $comment->created_at->format('d/m/Y') }}</strong>
-                        </small>
-                        <p class="mb-0 mt-2">{{ $comment->content }}</p>
+
+                <div class="list-group-item d-flex gap-3 p-3 mb-3 border rounded">
+                    <div class="d-flex gap-2 w-100">
+                        <div>
+                            @if ($comment->user->file_path)
+                                <img src="{{ asset('images/profile/' . $comment->user->file_path) }}" class="rounded-circle post-comment-img ml-1">
+                            @else 
+                                <img src="{{ asset('images/profile/default-profile-pic.jpg') }} " class="rounded-circle post-comment-img">
+                            @endif
+                        </div>
+                        <div class="d-flex flex-column ms-1">
+                            <small class="opacity-75 text-nowrap"> 
+                                <strong>{{ $comment->user->name}}</strong> le <strong>{{ $comment->created_at->format('d/m/Y') }}</strong>
+                            </small>
+                            <p class="mb-0 mt-2">{{ $comment->content }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
-        </div> 
+        </div>
+        
+        @endif
 
         <hr class="division">
 

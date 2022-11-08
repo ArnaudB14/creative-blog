@@ -38,7 +38,7 @@
 
     <div class="mb-3 d-flex flex-column align-items-start">
         <label for="status" class="form-label required">Statut</label>
-            <select name="status_id" class="block w-full mt-1 rounded-md">
+            <select name="status_id" class="block w-full mt-1 rounded-md select-post-create">
                 @foreach ($statuses as $status)
                     <option value="{{$status->id}}">{{$status->name}}</option>
                 @endforeach
@@ -48,9 +48,20 @@
 
     <div class="mb-3 d-flex flex-column align-items-start">
         <label for="category" class="form-label required">Catégorie</label>
-            <select name="category_id" class="block w-full mt-1 rounded-md">
+            <select name="category_id" class="block w-full mt-1 rounded-md select-post-create">
                 @foreach ($categories as $category)
                     <option value="{{$category->id}}">{{$category->name}}</option>
+                @endforeach
+            </select>
+        </label>
+    </div>
+
+    <div class="mb-3 d-flex flex-column align-items-start">
+        <label for="tag" class="form-label required">Tag(s)</label>
+            {{-- <select name="category_id" class="block w-full mt-1 rounded-md select-post-create selectpicker"> --}}
+            <select name="tag_id[]" class="block w-full mt-1 rounded-md select-post-create" multiple>
+                @foreach ($tags as $tag)
+                    <option value="{{$tag->id}}">{{$tag->name}}</option>
                 @endforeach
             </select>
         </label>
@@ -67,4 +78,17 @@
       content:" *";
       color: red;
     }
+
+    .select-post-create {
+        width: 15rem;
+    }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script type="text/javascript">
+     
+    $(function () {
+	    $('.selectpicker').selectpicker();
+    });
+    
+</script>

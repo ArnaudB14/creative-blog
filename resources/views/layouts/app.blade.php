@@ -26,7 +26,7 @@
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 {{Auth::user()->name}}
                                 @if (Auth::user()->file_path)
-                                    <img src="{{ asset('images/profile/' . Auth::user()->file_path) }}" class="navbar-img">
+                                    <img src="{{ asset('images/profile/' . Auth::user()->file_path) }}" class="navbar-img rounded-circle">
                                 @else 
                                     <img src="{{ asset('images/profile/default-profile-pic.jpg') }} " class="rounded-circle navbar-img">
                                 @endif

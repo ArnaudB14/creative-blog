@@ -6,7 +6,7 @@
 
 <div class="d-flex">
     <div class="card mt-5 me-5" style="width: 18rem;">
-        <div class="card-body">
+        <div class="card-body d-flex justify-content-between flex-column">
             <h5 class="card-title">Articles</h5>
             <p class="card-text">Créer, éditer et supprimer des articles</p>
             <a href="/posts" class="btn btn-primary">Gestion des articles</a>
@@ -14,10 +14,18 @@
     </div>
 
     <div class="card mt-5 me-5" style="width: 18rem;">
-        <div class="card-body">
+        <div class="card-body d-flex justify-content-between flex-column">
             <h5 class="card-title">Catégories</h5>
             <p class="card-text">Créer, éditer et supprimer des catégories</p>
             <a href="/categories" class="btn btn-primary">Gestion des catégories</a>
+        </div>
+    </div>
+
+    <div class="card mt-5 me-5" style="width: 18rem;">
+        <div class="card-body d-flex justify-content-between flex-column">
+            <h5 class="card-title">Tags</h5>
+            <p class="card-text">Créer, éditer et supprimer des tags</p>
+            <a href="/tags" class="btn btn-primary">Gestion des tags</a>
         </div>
     </div>
 </div>

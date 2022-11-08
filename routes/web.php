@@ -55,6 +55,19 @@ Route::controller(App\Http\Controllers\Admin\CategoryController::class)->middlew
     Route::delete('/categories/delete/{id}-{slug}','destroy')->name('categories.delete');
 });
 
+Route::controller(App\Http\Controllers\Admin\TagController::class)->middleware(['auth', 'verified'])->group(function() {
+    Route::get('/tags','index')->name('tags.index');
+    Route::get('/tags/create','create')->name('tags.create');
+    Route::get('/tags/{id}-{slug}','show')->name('tags.show');
+    Route::get('/tags/edit/{id}-{slug}','edit')->name('tags.edit');
+
+    Route::post('/tags/store','store')->name('tags.store');
+
+    Route::put('/tags/update/{id}-{slug}','update')->name('tags.update');
+
+    Route::delete('/tags/delete/{id}-{slug}','destroy')->name('tags.delete');
+});
+
 Route::controller(App\Http\Controllers\Admin\AccountController::class)->middleware(['auth', 'verified'])->group(function() {
     Route::get('/account','index')->name('account.index');
     Route::put('/account/update/{id}','update')->name('account.update');

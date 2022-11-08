@@ -102,7 +102,7 @@ class AccountController extends Controller
                 ]);
             };
 
-             return redirect('/mon-compte')->with('success', 'Modifications effectuée');
+             return redirect('/account')->with('success', 'Modifications effectuées');
          }
  
          return redirect('/')->with('error', 'Vous devez être connecté pour modifier un article');
