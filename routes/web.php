@@ -19,7 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 Route::get('/admin', fn() => view('dashboard'))->name('admin')->middleware('auth');
 
 // Route::get('/posts', [AdminPostController::class, 'index'])->name('posts.index');

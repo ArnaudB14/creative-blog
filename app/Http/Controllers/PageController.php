@@ -10,13 +10,23 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function home()
+    public function home(Request $request)
     {
         $statuses = Status::all();
         $categories = Category::all();
         $tags = Tag::all();
         $posts = Post::latest()->paginate(5);
+
+        $posts = Post::where([
+            [function ($query) use ($request) {
+                if(($term = $request->term)) {
+                    $query->orWhere('title', 'LIKE', '%' . $term . '%')->get();
+                }
+            }]
+        ])->latest()->paginate(5);
+
         // return view('pages.home', ['posts' => collect()]);
-        return view('pages.home', ['posts' => $posts, 'statuses' => $statuses, 'categories' => $categories, 'tags' => $tags]);
+        return view('pages.home', ['posts' => $posts, 'statuses' => $statuses, 'categories' => $categories, 'tags' => $tags])->with('i', (request()->input('page', 1)-1) * 5);
     }
+
 }

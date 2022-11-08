@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
     use HasFactory;
+    use Searchable;
+
     protected $fillable = ['title', 'description', 'category_id', 'status_id', 'tag_id', 'file_path', 'created_at', 'updated_at'];
 
     protected static function boot() {

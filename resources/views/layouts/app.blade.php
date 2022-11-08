@@ -34,7 +34,7 @@
                             <ul class="dropdown-menu">
                                 <li class=" nav-item"><a class="dropdown-item nav-link" href="/account">Mon compte</a></li>
                                 <li>
-                                    <form method="POST" action="{{ route('logout') }}">
+                                    <form method="POST" action="{{ route('logout') }}" class="mb-0">
                                     @csrf
                 
                                     <li class="nav-item"> 

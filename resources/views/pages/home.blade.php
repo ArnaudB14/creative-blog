@@ -25,11 +25,33 @@
             </div>
         </div>
     </div>
-    ​
+
     <h1 class="mb-4">Les derniers articles : </h1>
+
+    <div>
+        <div class="mx-auto pull-right">
+            <div class="">
+                <form action="" method="GET" role="search">
+                    <div class="input-group d-flex align-items-center">
+                        <input type="text" class="form-control me-4 rounded" name="term" placeholder="Chercher un article" id="term">
+                        <a href="/" class="text-decoration-none">
+                            <span class="input-group-btn mr-5 mt-1">
+                                <button class="btn btn-dark" type="submit" title="Search projects">
+                                   Chercher
+                                </button>
+                            </span>
+                            <span class="input-group-btn">
+                                <button class="btn btn-danger" type="button" title="Refresh page">
+                                    Réinitialiser la recherche
+                                </button>
+                            </span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     
-    
-    ​
     <div class="d-flex justify-content-between">
         @if(!$posts->isEmpty())
         <div class="list-group w-75 mb-4">
@@ -55,11 +77,11 @@
                 {{ $posts->links() }}
             </div>
         @else
-        <p class="text-center">Il n'y a aucun articles pour le moment</p>
+        Il n'y a aucun article
         @endif
         </div>
 
-        <div class="tableau">
+        <div class="tableau float-end">
             <table class="table border rounded">
                 <thead class="thead-dark">
                 <tr>
