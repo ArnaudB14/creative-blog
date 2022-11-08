@@ -8,7 +8,7 @@
     <div class="d-flex align-items-center">
         <h1 class="me-2"> {{ $post->title }} </h1>
         @if ($post->category->name != "Aucune")
-            <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
+            <a href="{{route('categories.show', [$post->category->id , $post->category->slug])}}" class="badge rounded-pill bg-primary text-decoration-none">{{ $post->category->name }}</a>
         @endif
     </div>
     <p class="mt-5"> {{ $post->description }} </p>

@@ -83,12 +83,3 @@
         width: 15rem;
     }
 </style>
-
-<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-<script type="text/javascript">
-     
-    $(function () {
-	    $('.selectpicker').selectpicker();
-    });
-    
-</script>

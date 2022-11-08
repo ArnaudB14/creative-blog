@@ -66,9 +66,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $slug)
     {
-        //
+        $posts = Category::find($id)->post()->orderBy('posts.created_at', 'DESC')->latest()->paginate(7);
+        $categories = Category::where('id', $id)->where('slug', $slug)->firstOrFail();
+        
+        return view('admin.categories.show', ['posts' => $posts, 'categories' => $categories]);
     }
 
     /**

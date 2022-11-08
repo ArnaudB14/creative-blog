@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="mb-4 d-flex justify-content-between align-items-center">
-    <h1>Liste des articles avec le tag : #{{ $tags->name }}</h1>
+    <h1>Liste des articles de la catégorie : {{ $categories->name }}</h1>
     <a href="/" class="btn btn-primary">Retour à l'accueil</a>
 </div>
 
@@ -29,9 +29,7 @@
                     <h6 class="mb-0">{{ $post->title }}</h6>
                     <p class="mb-0 opacity-75">{{ $post->description }}</p>
                     @if ($post->category->name != "Aucune")
-                        <p class="mb-0"> Catégorie :
-                            <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
-                        </p>
+                        <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
                     @endif
                 </div>
                 <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>

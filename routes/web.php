@@ -45,7 +45,7 @@ Route::controller(App\Http\Controllers\Admin\PostController::class)->group(funct
 Route::controller(App\Http\Controllers\Admin\CategoryController::class)->middleware(['auth', 'verified'])->group(function() {
     Route::get('/categories','index')->name('categories.index');
     Route::get('/categories/create','create')->name('categories.create');
-    // Route::get('/categories/{slug}','show')->name('categories.show');
+    Route::get('/categories/{id}-{slug}','show')->name('categories.show');
     Route::get('/categories/edit/{id}-{slug}','edit')->name('categories.edit');
 
     Route::post('/categories/store','store')->name('categories.store');
@@ -55,7 +55,7 @@ Route::controller(App\Http\Controllers\Admin\CategoryController::class)->middlew
     Route::delete('/categories/delete/{id}-{slug}','destroy')->name('categories.delete');
 });
 
-Route::controller(App\Http\Controllers\Admin\TagController::class)->middleware(['auth', 'verified'])->group(function() {
+Route::controller(App\Http\Controllers\Admin\TagController::class)->group(function() {
     Route::get('/tags','index')->name('tags.index');
     Route::get('/tags/create','create')->name('tags.create');
     Route::get('/tags/{id}-{slug}','show')->name('tags.show');

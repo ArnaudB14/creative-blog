@@ -28,19 +28,27 @@
             <div>
                 <h6 class="mb-0">{{ $post->title }}</h6>
                 <p class="mb-0 opacity-75">{{ $post->description }}</p>
-                @if ($post->status->name === "Publié")
-                    <span class="badge rounded-pill bg-success">{{ $post->status->name }}</span>
-                @elseif ($post->status->name === "Brouillon")
-                    <span class="badge rounded-pill bg-danger">{{ $post->status->name }}</span>
-                @elseif ($post->status->name === "En attente de validation")
-                    <span class="badge rounded-pill bg-warning text-dark">{{ $post->status->name }}</span>
-                @else
-                    <span class="badge rounded-pill bg-primary">{{ $post->status->name }}</span>
-                @endif
-
+                <p class="mb-0 mt-2"> Statut :
+                    @if ($post->status->name === "Publié")
+                        <span class="badge rounded-pill bg-success">{{ $post->status->name }}</span>
+                    @elseif ($post->status->name === "Brouillon")
+                        <span class="badge rounded-pill bg-danger">{{ $post->status->name }}</span>
+                    @elseif ($post->status->name === "En attente de validation")
+                        <span class="badge rounded-pill bg-warning text-dark">{{ $post->status->name }}</span>
+                    @else
+                        <span class="badge rounded-pill bg-primary">{{ $post->status->name }}</span>
+                    @endif
+                </p>
                 @if ($post->category->name != "Aucune")
-                    <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
+                    <p class="mb-0"> Catégorie :
+                        <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
+                    </p>
                 @endif
+                <p class="mb-0">Tags :
+                    @foreach ($post->tag as $postTag)
+                        <a href="{{route('tags.show', [$postTag->id , $postTag->slug])}}">#{{$postTag->name}}</a>&nbsp; 
+                    @endforeach
+                </p>
             </div>
             <div class="d-flex align-items-center">
                 <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>

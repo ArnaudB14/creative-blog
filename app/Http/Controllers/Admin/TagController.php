@@ -19,12 +19,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $tags = Tag::latest()->paginate(7);
-            return view('admin.tags.index', ['tags' => $tags]);
-        }
-
-        return redirect('/')->with('error', 'Vous devez être connecté pour voir cette page');
+        $tags = Tag::latest()->paginate(7);
+        return view('admin.tags.index', ['tags' => $tags]);
     }
 
     /**
@@ -70,9 +66,7 @@ class TagController extends Controller
      */
     public function show($id, $slug)
     {
-        DB::enableQueryLog();
-        $posts = Tag::find($id)->post()->orderBy('posts.created_at', 'DESC')->get();
-        //dd(DB::getQueryLog());
+        $posts = Tag::find($id)->post()->orderBy('posts.created_at', 'DESC')->paginate(7);
         $tags = Tag::where('id', $id)->where('slug', $slug)->firstOrFail();
         
         return view('admin.tags.show', ['posts' => $posts, 'tags' => $tags]);
