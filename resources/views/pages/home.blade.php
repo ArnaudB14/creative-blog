@@ -31,7 +31,7 @@
     <div>
         <div class="mx-auto pull-right mt-5">
             <div class="">
-                <form action="" method="GET" role="search">
+                <form action="#news" method="GET" role="search">
                     <div class="input-group d-flex flex-column align-items-center">
                         <input type="text" class="form-control w-50 rounded" name="term" placeholder="Chercher un article" id="term">
                         <a href="/" class="text-decoration-none mt-2 mb-5">
@@ -58,7 +58,7 @@
             @foreach($posts as $post)
             @if ($post->status->name === "Publié")
             <a href="{{route('posts.show', [$post->id , $post->slug])}}" class="list-group-item list-group-item-action d-flex gap-3 py-3">
-                <div class="d-flex gap-2 w-100 justify-content-between">
+                <div class="d-flex gap-2 w-100 justify-content-between align-items-center">
                     <div>
                         <h6 class="mb-0">{{ $post->title }}</h6>
                         <p class="mb-0 opacity-75">{{ $post->description }}</p>
@@ -95,7 +95,7 @@
                 </tbody>
                 <thead class="thead-dark">
                     <tr>
-                    <th scope="col" class="bg-dark text-white">Tags</th>
+                        <th scope="col" class="bg-dark text-white">Tags</th>
                     </tr>
                 </thead>
                 <tbody class="links">

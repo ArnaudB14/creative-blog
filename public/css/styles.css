@@ -1,13 +1,5 @@
-.navbar-img {
-    width: 35px;
-    height: 35px;
-    margin-left: 7px;
-    margin-right: 2px; 
-}
+/* DARK THEME */
 
-.dropdown-toggle::after {
-    margin-left: 0;
-}
 
 body.dark-theme {
     background: linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%);
@@ -20,20 +12,42 @@ body.dark-theme {
     color: white;
 }
 
-.dark-theme .nav li a:not(.dropdown-item), .dark-theme .container a span, .dark-theme .tableau td a, .dark-theme .post-tag{
+.dark-theme .btn:not(.btn-danger):hover {
+    background-color: #2a7679 !important;
+}
+
+.dark-theme .nav li a, .dark-theme .container a span, .dark-theme .post-tag{
     color: #FFFFFF !important;
 }
 
-.dark-theme .tableau td a {
-    border-bottom: 1px solid white !important;
+.dark-theme .nav .dropdown-menu .dropdown-item {
+    color: black !important;
 }
 
 .dark-theme .card-body {
     color: black;
 }
 
-.dark-theme .links td:hover {
-    background-color: rgb(37, 37, 37);
+
+.dark-theme thead th {
+    background-color: #348f92 !important;
+}
+
+.dark-theme tbody td {
+    background-color: #fff !important;
+}
+
+
+
+.navbar-img {
+    width: 35px;
+    height: 35px;
+    margin-left: 7px;
+    margin-right: 2px; 
+}
+
+.dropdown-toggle::after {
+    margin-left: 0;
 }
 
 .category-name:first-child {
@@ -46,5 +60,12 @@ body.dark-theme {
 }
 
 .links td:hover {
-    background-color: rgb(212, 212, 212);
+    background-color: rgb(226, 226, 226) !important;
+}
+
+.list-group-item:hover {
+    background-color: rgb(226, 226, 226) !important;
+}
+body {
+    min-height: 100vh;
 }
