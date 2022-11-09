@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}" />
     <title>Blog Créative</title>
 </head>
 <body>
@@ -15,7 +16,6 @@
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <span class="fs-4">Blog Créative</span>
             </a>
-​
             <ul class="nav align-items-baseline">
                 <li class="nav-item me-2"><a href="/" class="nav-link active">Accueil</a></li>
                 @if (Route::has('login'))
@@ -57,6 +57,13 @@
                     @endauth
                 @endif
             </ul>
+
+            <i class="bi bi-brightness-high mx-2"></i>
+            <div class="form-check form-switch d-flex align-items-center">
+                <input class="form-check-input me-2" type="checkbox" id="flexSwitchCheckDefault" role="button">
+                <label class="form-check-label" for="flexSwitchCheckDefault" id="theme-toggle"><i class="bi bi-moon-fill"></i></label>
+            </div>
+            
                 <!-- Authentication -->
         </header>
     </div>
@@ -74,14 +81,77 @@
 </html>
 
 <style>
-    .navbar-img {
-        width: 35px;
-        height: 35px;
-        margin-left: 7px;
-        margin-right: 2px; 
+  
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script type="text/javascript">
+
+    var body = document.getElementsByTagName('body')[0];
+    var dark_theme_class = 'dark-theme';
+    var theme = getCookie('theme');
+
+    if(theme != '') {
+        body.classList.add(theme);
     }
 
-    .dropdown-toggle::after {
-        margin-left: 0;
+    document.addEventListener('DOMContentLoaded', function () {
+
+
+        $('#flexSwitchCheckDefault').on('click', function () {
+
+            if (body.classList.contains(dark_theme_class)) {
+
+                body.classList.remove(dark_theme_class);
+                $('#mode').text('Light Mode')
+                setCookie('theme', 'light');
+
+            }
+            else {
+
+                $('#mode').text('Dark Mode')
+
+                body.classList.add(dark_theme_class);
+
+                setCookie('theme', 'dark-theme');
+
+            }
+        });
+
+    });
+
+    // enregistrement du theme dans le cookie
+
+    function setCookie(name, value) {
+
+        var d = new Date();
+        d.setTime(d.getTime() + (365*24*60*60*1000));
+        var expires = "expires=" + d.toUTCString();
+        console.log(expires)
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        console.log(document.cookie)
     }
-</style>
+
+    // methode de recuperation du theme dans le cookie
+
+    function getCookie(cname) {
+
+        var theme = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+
+        for(var i = 0; i < ca.length; i++) {
+
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+
+            if (c.indexOf(theme) == 0) {
+                return c.substring(theme.length, c.length);
+            }
+        }
+        return "";
+    }
+
+</script>

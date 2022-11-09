@@ -18,7 +18,7 @@
 
     <div class="d-flex">
         @foreach ($post->tag as $postTag)
-            <a href="{{route('tags.show', [$postTag->id , $postTag->slug])}}">#{{$postTag->name}}</a>&nbsp; 
+            <a href="{{route('tags.show', [$postTag->id , $postTag->slug])}}" class="post-tag mt-2">#{{$postTag->name}}</a>&nbsp; 
         @endforeach
     </div>
     

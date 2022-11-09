@@ -89,7 +89,7 @@
                 <tbody>
                     @foreach($categories as $category)
                     <tr class="category-name links">
-                        <td><a href="{{route('categories.show', [$category->id , $category->slug])}}" class="text-decoration-none text-body">{{ $category->name }}</a></td>
+                        <td><a href="{{route('categories.show', [$category->id , $category->slug])}}" class="text-decoration-none text-body border-bottom border-dark">{{ $category->name }}</a></td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -101,7 +101,7 @@
                 <tbody class="links">
                     @foreach ($tags as $tag)
                         <tr class="links">
-                            <td><a href="{{route('tags.show', [$tag->id , $tag->slug])}}" class="text-decoration-none text-body">{{$tag->name}}</a></td>
+                            <td><a href="{{route('tags.show', [$tag->id , $tag->slug])}}" class="text-decoration-none text-body border-bottom border-dark">{{$tag->name}}</a></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -109,18 +109,3 @@
         </div>
     </div>
 @endsection
-
-<style>
-    .category-name:first-child {
-        display: none;
-    }
-
-    .tableau {
-        width: 20%;
-        position: sticky;
-    }
-
-    .links td:hover {
-        background-color: rgb(212, 212, 212);
-    }
-</style>

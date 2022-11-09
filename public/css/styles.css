@@ -1,0 +1,50 @@
+.navbar-img {
+    width: 35px;
+    height: 35px;
+    margin-left: 7px;
+    margin-right: 2px; 
+}
+
+.dropdown-toggle::after {
+    margin-left: 0;
+}
+
+body.dark-theme {
+    background: linear-gradient(109.6deg, rgba(0, 0, 0, 0.93) 11.2%, rgb(63, 61, 61) 78.9%);
+    color: #FFFFFF;
+}
+
+.dark-theme .btn:not(.btn-danger) {
+    background-color: #348f92;
+    border: none;
+    color: white;
+}
+
+.dark-theme .nav li a:not(.dropdown-item), .dark-theme .container a span, .dark-theme .tableau td a, .dark-theme .post-tag{
+    color: #FFFFFF !important;
+}
+
+.dark-theme .tableau td a {
+    border-bottom: 1px solid white !important;
+}
+
+.dark-theme .card-body {
+    color: black;
+}
+
+.dark-theme .links td:hover {
+    background-color: rgb(37, 37, 37);
+}
+
+.category-name:first-child {
+    display: none;
+}
+
+.tableau {
+    width: 20%;
+    position: sticky;
+}
+
+.links td:hover {
+    background-color: rgb(212, 212, 212);
+}

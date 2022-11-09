@@ -7,6 +7,7 @@ use App\Http\Requests\CategoryRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
+use Illuminate\Support\Facades\Input;
 
 class CategoryController extends Controller
 {
@@ -49,10 +50,14 @@ class CategoryController extends Controller
         if (Auth::check()) {
             $validatedData = $request->validated();
 
+            if (Category::where('name', '=', $validatedData['name'])->exists()) {
+                return redirect('/categories/create')->with('error', 'Cette catégorie existe déjà');
+            }
+
             $categories = Category::create([
                  'name' => $validatedData['name'],
             ]);
- 
+
         
             return redirect('categories')->with('success', 'Catégorie créée avec succès');
         }

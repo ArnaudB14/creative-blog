@@ -47,6 +47,10 @@ class TagController extends Controller
         if (Auth::check()) {
             $validatedData = $request->validated();
 
+            if (Tag::where('name', '=', $validatedData['name'])->exists()) {
+                return redirect('/tags/create')->with('error', 'Ce tag existe déjà');
+            }
+
             $tags = Tag::create([
                  'name' => $validatedData['name'],
             ]);

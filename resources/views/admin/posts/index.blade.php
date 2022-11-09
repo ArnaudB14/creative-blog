@@ -4,7 +4,10 @@
 
 <div class="d-flex justify-content-between align-items-center">
     <h1 class="mb-4">Administration des articles :</h1>
-    <a class="btn btn-primary px-4 gap-3" href="{{ route('posts.create') }}">Ajouter un article</a>
+    <div>
+        <a href="{{route('dashboard')}}" class="btn btn-primary">Retour au dashboard</a>
+        <a class="btn btn-primary px-4 gap-3" href="{{ route('posts.create') }}">Ajouter un article</a>
+    </div>
 </div>
 
 @if(!$posts->isEmpty())
@@ -28,6 +31,9 @@
             <div>
                 <h6 class="mb-0">{{ $post->title }}</h6>
                 <p class="mb-0 opacity-75">{{ $post->description }}</p>
+                @if ($post->file_path != null)
+                    <img src="{{ asset('images/' . $post->file_path) }}" class="post-img my-2">
+                @endif
                 <p class="mb-0 mt-2"> Statut :
                     @if ($post->status->name === "Publié")
                         <span class="badge rounded-pill bg-success">{{ $post->status->name }}</span>
@@ -57,7 +63,7 @@
                 <a href="{{route('posts.edit', [$post->id , $post->slug])}}" class="text-decoration-none mx-2">
                     <i class="bi bi-pencil-square btn btn-primary btn-sm"></i>
                 </a>
-                <form action="{{route('posts.delete', [$post->id , $post->slug])}}" method="POST">
+                <form action="{{route('posts.delete', [$post->id , $post->slug])}}" method="POST" class="m-0">
                     @csrf
                     @method('DELETE')
                     <button class="border-0 p-0" onclick="if(!confirm('Voulez-vous vraiment supprimer cet article ?')) {return false;}">
@@ -76,3 +82,9 @@
 @endif
 
 @endsection
+
+<style>
+    .post-img {
+        width: 155px;
+    }
+</style>

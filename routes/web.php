@@ -28,7 +28,7 @@ Route::get('/admin', fn() => view('dashboard'))->name('admin')->middleware('auth
 // Route::get('/posts/{slug}', [AdminPostController::class, 'show'])->name('posts.show');
 
 
-Route::controller(App\Http\Controllers\Admin\PostController::class)->group(function() {
+Route::controller(App\Http\Controllers\Admin\PostController::class)->middleware(['auth', 'verified'])->group(function() {
     Route::get('/posts','index')->name('posts.index');
     Route::get('/posts/create','create')->name('posts.create');
     Route::get('/posts/{id}-{slug}','show')->name('posts.show');
@@ -54,7 +54,7 @@ Route::controller(App\Http\Controllers\Admin\CategoryController::class)->middlew
     Route::delete('/categories/delete/{id}-{slug}','destroy')->name('categories.delete');
 });
 
-Route::controller(App\Http\Controllers\Admin\TagController::class)->group(function() {
+Route::controller(App\Http\Controllers\Admin\TagController::class)->middleware(['auth', 'verified'])->group(function() {
     Route::get('/tags','index')->name('tags.index');
     Route::get('/tags/create','create')->name('tags.create');
     Route::get('/tags/{id}-{slug}','show')->name('tags.show');

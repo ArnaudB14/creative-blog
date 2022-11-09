@@ -4,7 +4,10 @@
 
 <div class="d-flex justify-content-between align-items-center">
     <h1 class="mb-4">Administration des tags :</h1>
-    <a class="btn btn-primary px-4 gap-3" href="{{ route('tags.create') }}">Ajouter un tag</a>
+    <div>
+        <a class="btn btn-primary px-4 gap-3" href="{{ route('tags.create') }}">Ajouter un tag</a>
+        <a href="{{route('dashboard')}}" class="btn btn-primary">Retour au dashboard</a>
+    </div>
 </div>
 
 @if(!$tags->isEmpty())
@@ -32,7 +35,7 @@
                 <a href="{{route('tags.edit', [$tag->id , $tag->slug])}}" class="text-decoration-none mx-2">
                     <i class="bi bi-pencil-square btn btn-primary btn-sm"></i>
                 </a>
-                <form action="{{route('tags.delete', [$tag->id , $tag->slug])}}" method="POST">
+                <form action="{{route('tags.delete', [$tag->id , $tag->slug])}}" method="POST" onclick="if(!confirm('Voulez-vous vraiment supprimer ce tag ?')) {return false;}">
                     @csrf
                     @method('DELETE')
                     <button class="border-0 p-0">
