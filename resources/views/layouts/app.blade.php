@@ -60,7 +60,7 @@
 
             <i class="bi bi-brightness-high mx-2"></i>
             <div class="form-check form-switch d-flex align-items-center">
-                <input class="form-check-input me-2" type="checkbox" id="flexSwitchCheckDefault" role="button">
+                <input class="form-check-input me-2" type="checkbox" id="flexSwitchCheckDefault" role="button" checked="checked">
                 <label class="form-check-label" for="flexSwitchCheckDefault" id="theme-toggle"><i class="bi bi-moon-fill"></i></label>
             </div>
             
@@ -93,6 +93,14 @@
 
     if(theme != '') {
         body.classList.add(theme);
+    };
+
+    if (body.classList.contains(dark_theme_class)) {
+        $('#flexSwitchCheckDefault').prop('checked',true);
+    }
+
+    else {
+        $('#flexSwitchCheckDefault').prop('checked',false);
     }
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -117,7 +125,6 @@
 
             }
         });
-
     });
 
     // enregistrement du theme dans le cookie
