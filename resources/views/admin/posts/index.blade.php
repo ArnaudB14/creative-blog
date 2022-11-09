@@ -44,11 +44,13 @@
                         <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
                     </p>
                 @endif
-                <p class="mb-0">Tags :
-                    @foreach ($post->tag as $postTag)
-                        <a href="{{route('tags.show', [$postTag->id , $postTag->slug])}}">#{{$postTag->name}}</a>&nbsp; 
-                    @endforeach
-                </p>
+                @if (!$post->tag->isEmpty())
+                    <p class="mb-0">Tags :
+                        @foreach ($post->tag as $postTag)
+                            <span class="badge rounded-pill bg-info text-dark">{{$postTag->name}}</span> 
+                        @endforeach
+                    </p>
+                @endif
             </div>
             <div class="d-flex align-items-center">
                 <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>

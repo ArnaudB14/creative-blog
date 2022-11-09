@@ -20,7 +20,7 @@ class PageController extends Controller
         $posts = Post::where([
             [function ($query) use ($request) {
                 if(($term = $request->term)) {
-                    $query->orWhere('title', 'LIKE', '%' . $term . '%')->get();
+                    $query->orWhere('title', 'LIKE', '%' . $term . '%')->orWhere('description', 'LIKE', '%' . $term . '%')->get();
                 }
             }]
         ])->latest()->paginate(5);

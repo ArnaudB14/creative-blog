@@ -29,19 +29,19 @@
     <h1 class="mb-4">Les derniers articles : </h1>
 
     <div>
-        <div class="mx-auto pull-right">
+        <div class="mx-auto pull-right mt-5">
             <div class="">
                 <form action="" method="GET" role="search">
-                    <div class="input-group d-flex align-items-center">
-                        <input type="text" class="form-control me-4 rounded" name="term" placeholder="Chercher un article" id="term">
-                        <a href="/" class="text-decoration-none">
+                    <div class="input-group d-flex flex-column align-items-center">
+                        <input type="text" class="form-control w-50 rounded" name="term" placeholder="Chercher un article" id="term">
+                        <a href="/" class="text-decoration-none mt-2 mb-5">
                             <span class="input-group-btn mr-5 mt-1">
-                                <button class="btn btn-dark" type="submit" title="Search projects">
+                                <button class="btn btn-outline-primary" type="submit" title="Search projects">
                                    Chercher
                                 </button>
                             </span>
                             <span class="input-group-btn">
-                                <button class="btn btn-danger" type="button" title="Refresh page">
+                                <button class="btn btn-outline-danger" type="button" title="Refresh page">
                                     Réinitialiser la recherche
                                 </button>
                             </span>
@@ -63,9 +63,7 @@
                         <h6 class="mb-0">{{ $post->title }}</h6>
                         <p class="mb-0 opacity-75">{{ $post->description }}</p>
                         @if ($post->category->name != "Aucune")
-                            <p class="mb-0 mt-2"> Catégorie :
-                                <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
-                            </p>
+                            <span class="badge rounded-pill bg-primary">{{ $post->category->name }}</span>
                         @endif
                     </div>
                     <small class="opacity-50 text-nowrap">{{ $post->created_at->format('d/m/Y') }}</small>
